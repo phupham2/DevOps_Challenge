@@ -1,12 +1,13 @@
-from flask import Flask, render_template, request
 import requests
+
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 @app.route('/temperature', methods=['POST'])
 def temperature():
     zipcode = request.form['zip']
-    r = requests.get('http://api.openweathermap.org/data/2.5/weather?zip='+zipcode+',us&appid=2c746781db3f4ff65548af3c616ef225')
+    r = requests.get('http://api.openweathermap.org/data/2.5/weather?zip='+zipcode+',us&appid=090574e3f50b140b5330012c7b52bfdd')
     json_object = r.json()
     temp_k = float(json_object['main']['temp'])
     temp_f = (temp_k - 273.15) * 1.8 + 32
@@ -17,4 +18,4 @@ def index():
 	return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)
